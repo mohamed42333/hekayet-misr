@@ -168,7 +168,7 @@ padding:22px;font-size:11px
 
 <div id="emailStep">
 <h2>ابدأ رحلتك</h2>
-<p class="sub">اكتب بريدك الإلكتروني وسنرسل لك رمز تحقق.</p>
+<p class="sub">اكتب بريدك الإلكتروني وسنرسل لك رابط دخول آمن.</p>
 
 <div class="field">
 <label for="email">البريد الإلكتروني</label>
@@ -176,33 +176,33 @@ padding:22px;font-size:11px
 </div>
 
 <button class="btn primary" id="sendCode" type="button" onclick="sendCode()">
-إرسال رمز التحقق
+إرسال رابط الدخول
 </button>
 
 <div class="status" id="emailStatus"></div>
 </div>
 
-<div id="otpStep" class="hidden">
-<h2>تحقق من بريدك</h2>
-<p class="sub">أدخل الرمز المكون من 6 أرقام.</p>
-
-<div class="field">
-<label for="otp">رمز التحقق</label>
-<input id="otp" inputmode="numeric" maxlength="6" placeholder="000000">
+<div id="sentStep" class="hidden">
+<h2>افحص بريدك الإلكتروني</h2>
+<p class="sub">
+تم طلب إرسال رابط الدخول إلى بريدك.
+افتح Gmail واضغط على الرابط الموجود في الرسالة للعودة إلى الموقع.
+</p>
+<div class="ornament">✉</div>
+<div class="status success" id="sentStatus">
+انتظر وصول الرسالة، وتحقق أيضاً من مجلد الرسائل غير المرغوب فيها.
+</div>
+<button class="btn secondary" type="button" onclick="backEmail()" style="width:100%;margin-top:15px">
+استخدام بريد آخر
+</button>
 </div>
 
-<button class="btn primary" id="verifyCode" type="button" onclick="verifyCode()">
-تأكيد الرمز والدخول
-</button>
-
-<button class="btn secondary" type="button" onclick="backEmail()" style="width:100%;margin-top:10px">
-تغيير البريد الإلكتروني
-</button>
-
-<div class="status" id="otpStatus"></div>
+<div id="loadingStep" class="hidden">
+<h2>جارٍ التحقق من الدخول</h2>
+<p class="sub">لحظات ونفتح لك المكتبة التاريخية...</p>
 </div>
 
-<p class="tiny">لن نطلب منك كلمة مرور. لا تشارك رمز التحقق مع أي شخص.</p>
+<p class="tiny">لا تشارك رابط الدخول مع أي شخص. سيمنح صاحبه إمكانية الدخول إلى حسابك.</p>
 </section>
 
 <main id="library" class="hidden">
@@ -222,10 +222,10 @@ padding:22px;font-size:11px
 </div>
 
 <div class="filters" id="filters">
-<button class="filter active" type="button" data-filter="الكل" onclick="setFilter('الكل',this)">الكل</button>
-<button class="filter" type="button" data-filter="قديم" onclick="setFilter('قديم',this)">مصر القديمة</button>
-<button class="filter" type="button" data-filter="وسيط" onclick="setFilter('وسيط',this)">العصور الوسطى</button>
-<button class="filter" type="button" data-filter="حديث" onclick="setFilter('حديث',this)">مصر الحديثة</button>
+<button class="filter active" type="button" onclick="setFilter('الكل',this)">الكل</button>
+<button class="filter" type="button" onclick="setFilter('قديم',this)">مصر القديمة</button>
+<button class="filter" type="button" onclick="setFilter('وسيط',this)">العصور الوسطى</button>
+<button class="filter" type="button" onclick="setFilter('حديث',this)">مصر الحديثة</button>
 </div>
 </div>
 
@@ -243,32 +243,33 @@ padding:22px;font-size:11px
 حكاية مصر © <span id="year"></span> — صُمم لكل من يريد أن يعرف حكاية بلده
 </footer>
 
-<!-- تحميل مكتبة Supabase مع رابط احتياطي -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-onerror="this.onerror=null;this.src='https://unpkg.com/@supabase/supabase-js@2'"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 "use strict";
 
-/* إعدادات مشروع Supabase */
 const SUPABASE_URL = "https://zhmohvbhtnbyhxtmhxcx.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_l_qxTC4U6ZoRPDXyX348NQ_ICi4UCFL";
+const REDIRECT_URL = "https://mohamed42333.github.io/hekayet-misr/";
 
 let supabaseClient = null;
 
-try {
-  if (window.supabase && window.supabase.createClient) {
-    supabaseClient = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
-    );
-  }
-} catch (e) {
-  console.error("Supabase initialization error:", e);
+if(window.supabase && window.supabase.createClient){
+  supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY,
+    {
+      auth:{
+        flowType:"implicit",
+        detectSessionInUrl:true,
+        persistSession:true,
+        autoRefreshToken:true
+      }
+    }
+  );
 }
 
 const $ = id => document.getElementById(id);
-
 let currentFilter = "الكل";
 
 const eras = [
@@ -380,10 +381,10 @@ take:"كل جيل يضيف فصلاً جديداً إلى حكاية مصر."
 ];
 
 function setStatus(id,message,type=""){
-  const el = $(id);
-  if(!el) return;
-  el.textContent = message;
-  el.className = "status " + type;
+  const el=$(id);
+  if(!el)return;
+  el.textContent=message;
+  el.className="status "+type;
 }
 
 function showLibrary(){
@@ -403,61 +404,58 @@ function showAuth(){
 }
 
 function renderCards(){
-  const search = $("search");
-  const q = search ? search.value.trim().toLowerCase() : "";
+  const q=$("search").value.trim().toLowerCase();
 
-  const list = eras.filter(e =>
-    (currentFilter === "الكل" || e.group === currentFilter) &&
+  const list=eras.filter(e=>
+    (currentFilter==="الكل"||e.group===currentFilter)&&
     (
-      e.title.toLowerCase().includes(q) ||
-      e.summary.toLowerCase().includes(q) ||
+      e.title.toLowerCase().includes(q)||
+      e.summary.toLowerCase().includes(q)||
       e.period.toLowerCase().includes(q)
     )
   );
 
-  const container = $("cards");
+  const container=$("cards");
   container.replaceChildren();
 
   list.forEach(e=>{
-    const card = document.createElement("article");
-    card.className = "card";
+    const card=document.createElement("article");
+    card.className="card";
 
-    const top = document.createElement("div");
-    top.className = "card-top";
+    const top=document.createElement("div");
+    top.className="card-top";
 
-    const symbol = document.createElement("div");
-    symbol.className = "symbol";
-    symbol.textContent = e.icon;
+    const symbol=document.createElement("div");
+    symbol.className="symbol";
+    symbol.textContent=e.icon;
 
-    const period = document.createElement("span");
-    period.className = "period";
-    period.textContent = e.period;
+    const period=document.createElement("span");
+    period.className="period";
+    period.textContent=e.period;
 
     top.append(symbol,period);
 
-    const title = document.createElement("h3");
-    title.textContent = e.title;
+    const title=document.createElement("h3");
+    title.textContent=e.title;
 
-    const summary = document.createElement("p");
-    summary.textContent = e.summary;
+    const summary=document.createElement("p");
+    summary.textContent=e.summary;
 
-    const btn = document.createElement("button");
-    btn.className = "read";
-    btn.type = "button";
-    btn.textContent = "اقرأ الحكاية ←";
-    btn.onclick = ()=>openStory(e);
+    const btn=document.createElement("button");
+    btn.className="read";
+    btn.type="button";
+    btn.textContent="اقرأ الحكاية ←";
+    btn.onclick=()=>openStory(e);
 
     card.append(top,title,summary,btn);
     container.append(card);
   });
 
-  if(!list.length){
-    container.textContent = "لم نعثر على بطاقة مطابقة.";
-  }
+  if(!list.length)container.textContent="لم نعثر على بطاقة مطابقة.";
 }
 
 function setFilter(filter,button){
-  currentFilter = filter;
+  currentFilter=filter;
   document.querySelectorAll(".filter").forEach(b=>{
     b.classList.toggle("active",b===button);
   });
@@ -468,27 +466,27 @@ function openStory(e){
   $("library").classList.add("hidden");
   $("storyView").classList.remove("hidden");
 
-  const holder = $("storyContent");
+  const holder=$("storyContent");
   holder.replaceChildren();
 
-  const date = document.createElement("div");
-  date.className = "date";
-  date.textContent = e.period;
+  const date=document.createElement("div");
+  date.className="date";
+  date.textContent=e.period;
 
-  const title = document.createElement("h2");
-  title.textContent = e.title;
+  const title=document.createElement("h2");
+  title.textContent=e.title;
 
-  const summary = document.createElement("p");
-  summary.className = "sub";
-  summary.textContent = e.summary;
+  const summary=document.createElement("p");
+  summary.className="sub";
+  summary.textContent=e.summary;
 
-  const story = document.createElement("div");
-  story.className = "story";
-  story.textContent = e.story;
+  const story=document.createElement("div");
+  story.className="story";
+  story.textContent=e.story;
 
-  const takeaway = document.createElement("div");
-  takeaway.className = "takeaway";
-  takeaway.textContent = e.take;
+  const takeaway=document.createElement("div");
+  takeaway.className="takeaway";
+  takeaway.textContent=e.take;
 
   holder.append(date,title,summary,story,takeaway);
   window.scrollTo({top:0,behavior:"smooth"});
@@ -501,15 +499,14 @@ function backCards(){
 }
 
 function backEmail(){
-  $("otpStep").classList.add("hidden");
+  $("sentStep").classList.add("hidden");
   $("emailStep").classList.remove("hidden");
   setStatus("emailStatus","");
-  setStatus("otpStatus","");
 }
 
-window.sendCode = async function(){
-  const email = $("email").value.trim();
-  const button = $("sendCode");
+window.sendCode=async function(){
+  const email=$("email").value.trim();
+  const button=$("sendCode");
 
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
     setStatus("emailStatus","اكتب بريد إلكتروني صحيحاً.","error");
@@ -517,114 +514,72 @@ window.sendCode = async function(){
   }
 
   if(!supabaseClient){
-    setStatus(
-      "emailStatus",
-      "مكتبة تسجيل الدخول لم تُحمّل. تأكد من الإنترنت ثم حدّث الصفحة.",
-      "error"
-    );
+    setStatus("emailStatus","تعذر تحميل خدمة تسجيل الدخول. حدّث الصفحة وتأكد من الإنترنت.","error");
     return;
   }
 
-  button.disabled = true;
-  button.textContent = "جارٍ الإرسال...";
-  setStatus("emailStatus","جارٍ الاتصال بخدمة البريد...");
+  button.disabled=true;
+  button.textContent="جارٍ الإرسال...";
+  setStatus("emailStatus","جارٍ إرسال رابط الدخول...");
 
   try{
-    const {error} = await supabaseClient.auth.signInWithOtp({
+    const {error}=await supabaseClient.auth.signInWithOtp({
       email:email,
-      options:{shouldCreateUser:true}
+      options:{
+        shouldCreateUser:true,
+        emailRedirectTo:REDIRECT_URL
+      }
     });
 
-    if(error) throw error;
+    if(error)throw error;
 
     $("emailStep").classList.add("hidden");
-    $("otpStep").classList.remove("hidden");
-
-    setStatus(
-      "otpStatus",
-      "تم طلب إرسال رسالة التحقق. افحص البريد الوارد والرسائل غير المرغوب فيها.",
-      "success"
-    );
+    $("sentStep").classList.remove("hidden");
 
   }catch(error){
-    console.error(error);
-    setStatus("emailStatus","تعذر الإرسال: " + (error.message || "خطأ غير معروف"),"error");
+    console.error("Email login error:",error);
+    setStatus("emailStatus","تعذر الإرسال: "+(error.message||"خطأ غير معروف"),"error");
   }finally{
-    button.disabled = false;
-    button.textContent = "إرسال رمز التحقق";
+    button.disabled=false;
+    button.textContent="إرسال رابط الدخول";
   }
 };
 
-window.verifyCode = async function(){
-  const email = $("email").value.trim();
-  const token = $("otp").value.trim();
-  const button = $("verifyCode");
-
-  if(!/^\d{6}$/.test(token)){
-    setStatus("otpStatus","أدخل رمزاً مكوناً من 6 أرقام.","error");
-    return;
-  }
-
-  if(!supabaseClient){
-    setStatus("otpStatus","خدمة تسجيل الدخول غير متاحة حالياً.","error");
-    return;
-  }
-
-  button.disabled = true;
-  button.textContent = "جارٍ التحقق...";
-
-  try{
-    const {data,error} = await supabaseClient.auth.verifyOtp({
-      email:email,
-      token:token,
-      type:"email"
-    });
-
-    if(error) throw error;
-
-    if(data.session){
-      showLibrary();
-    }else{
-      setStatus("otpStatus","لم يتم إنشاء جلسة دخول. حاول مرة أخرى.","error");
-    }
-
-  }catch(error){
-    console.error(error);
-    setStatus("otpStatus","تعذر التحقق: " + (error.message || "خطأ غير معروف"),"error");
-  }finally{
-    button.disabled = false;
-    button.textContent = "تأكيد الرمز والدخول";
-  }
-};
-
-window.logout = async function(){
+window.logout=async function(){
   if(supabaseClient){
     await supabaseClient.auth.signOut();
   }
   showAuth();
 };
 
-$("year").textContent = new Date().getFullYear();
+$("year").textContent=new Date().getFullYear();
 
-/* استعادة جلسة المستخدم عند فتح الموقع */
+/* فحص جلسة المستخدم بعد الرجوع من Gmail */
 if(supabaseClient){
+
   supabaseClient.auth.getSession().then(({data,error})=>{
     if(error){
-      console.error(error);
+      console.error("Session error:",error);
       return;
     }
-    if(data.session) showLibrary();
+
+    if(data.session){
+      showLibrary();
+    }
   }).catch(error=>{
-    console.error("Session error:",error);
+    console.error(error);
   });
 
-  supabaseClient.auth.onAuthStateChange((_event,session)=>{
-    if(session) showLibrary();
+  supabaseClient.auth.onAuthStateChange((event,session)=>{
+    if(session){
+      showLibrary();
+    }
   });
-} else {
+
+}else{
   setStatus(
     "emailStatus",
-    "تعذر تحميل خدمة تسجيل الدخول. تحقق من اتصال الإنترنت.",
+    "تعذر تحميل مكتبة تسجيل الدخول. تحقق من الإنترنت.",
     "error"
   );
 }
