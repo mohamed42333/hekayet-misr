@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101713">
+  <title>حكاية مصر | من أول الحكاية إلى اليوم</title>
+  <meta name="description" content="رحلة قراءة ممتعة عبر تاريخ مصر من العصور القديمة حتى العصر الحديث.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
+    :root{--bg:#0b100e;--panel:#121a16;--panel2:#17221c;--gold:#d7b875;--gold2:#f0dba8;--text:#f4f0e7;--muted:#a9b2aa;--line:rgba(215,184,117,.18);--green:#7da58a}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(ellipse at 85% -10%,rgba(105,132,92,.17),transparent 38%),radial-gradient(ellipse at 0% 40%,rgba(215,184,117,.07),transparent 35%),var(--bg);color:var(--text);font-family:'Cairo',sans-serif;min-height:100vh}
+    button,input{font:inherit}
+    button{cursor:pointer}
+    .hidden{display:none!important}
+    .wrap{width:min(1120px,calc(100% - 32px));margin:auto}
+    .top{display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:.2px}
+    .brand-mark{width:42px;height:42px;border:1px solid var(--gold);border-radius:14px;display:grid;place-items:center;color:var(--gold2);font-size:23px;background:linear-gradient(145deg,#29362c,#111812);box-shadow:0 8px 28px #0005}
+    .brand small{display:block;color:var(--muted);font-size:10px;font-weight:500;letter-spacing:1px}
+    .top-note{color:var(--muted);font-size:12px}
+    .hero{padding:58px 0 35px;text-align:center}
+    .eyebrow{color:var(--gold);font-size:12px;letter-spacing:2px;font-weight:800}
+    h1{font-size:clamp(34px,6vw,64px);line-height:1.25;margin:12px 0;color:var(--gold2);font-weight:900}
+    .hero p{max-width:650px;margin:0 auto;color:#c0c7be;line-height:2;font-size:15px}
+    .ornament{display:flex;align-items:center;justify-content:center;gap:12px;color:var(--gold);margin:23px auto}
+    .ornament:before,.ornament:after{content:"";width:65px;height:1px;background:var(--line)}
+    .auth-shell{max-width:470px;margin:20px auto 70px;padding:28px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(145deg,rgba(27,39,31,.96),rgba(15,22,18,.96));box-shadow:0 25px 80px #0006}
+    .auth-shell h2{margin:0 0 8px;font-size:23px}
+    .sub{color:var(--muted);font-size:13px;line-height:1.9;margin:0 0 22px}
+    label{display:block;font-size:13px;color:#d9d7cc;margin:0 0 8px}
+    input{width:100%;border:1px solid #35443a;border-radius:13px;background:#0c130f;color:var(--text);padding:14px 15px;outline:none;direction:ltr;text-align:left}
+    input:focus{border-color:var(--gold);box-shadow:0 0 0 3px #d7b87518}
+    .field{margin:17px 0}
+    .btn{border:0;border-radius:13px;padding:13px 18px;font-weight:800;transition:.2s}
+    .btn-primary{width:100%;background:linear-gradient(110deg,#b99758,#ead49c);color:#172017}
+    .btn-primary:hover{transform:translateY(-2px);filter:brightness(1.05)}
+    .btn-secondary{background:#202d24;color:var(--gold2);border:1px solid var(--line)}
+    .status{min-height:25px;margin-top:13px;font-size:12px;color:var(--muted);line-height:1.7}
+    .status.error{color:#ff9c91}.status.success{color:#a8d6ad}
+    .tiny{font-size:11px;color:#87938a;line-height:1.8;margin-top:17px}
+    .library-head{padding:40px 0 24px;display:flex;align-items:end;justify-content:space-between;gap:20px}
+    .library-head h2{font-size:30px;margin:5px 0}
+    .library-head p{color:var(--muted);margin:0;font-size:13px}
+    .logout{border:1px solid var(--line);color:var(--gold2);background:#17221c;border-radius:12px;padding:9px 15px}
+    .tools{display:flex;gap:12px;flex-wrap:wrap;margin:15px 0 25px}
+    .search{flex:1;min-width:210px}
+    .search input{direction:rtl;text-align:right}
+    .filters{display:flex;gap:8px;flex-wrap:wrap}
+    .filter{border:1px solid var(--line);background:#121a16;color:#c9cfc7;border-radius:999px;padding:8px 13px;font-size:12px}
+    .filter.active{background:#d7b875;color:#172017;border-color:#d7b875;font-weight:800}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;padding-bottom:65px}
+    .card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:20px;padding:22px;background:linear-gradient(145deg,#19251d,#111813);min-height:245px;display:flex;flex-direction:column;transition:.25s}
+    .card:hover{transform:translateY(-5px);border-color:#b99758aa;box-shadow:0 18px 45px #0005}
+    .card:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.8}
+    .card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .symbol{width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:#26352a;color:var(--gold2);font-size:23px}
+    .period{font-size:10px;color:var(--gold);border:1px solid var(--line);border-radius:20px;padding:5px 9px}
+    .card h3{font-size:19px;margin:0 0 9px}
+    .card p{font-size:12px;color:#b8c1b8;line-height:2;margin:0 0 18px;flex:1}
+    .read{align-self:flex-start;border:0;background:transparent;color:var(--gold2);padding:0;font-size:12px;font-weight:800}
+    .read span{display:inline-block;margin-right:5px;transition:.2s}.read:hover span{transform:translateX(-4px)}
+    .detail{max-width:800px;margin:25px auto 65px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(145deg,#19251d,#101712);padding:clamp(22px,5vw,44px)}
+    .detail .back{border:1px solid var(--line);background:#111a14;color:var(--gold2);padding:8px 13px;border-radius:10px}
+    .detail h2{font-size:clamp(27px,5vw,42px);color:var(--gold2);margin:25px 0 8px}
+    .detail .date{color:var(--gold);font-size:12px}
+    .detail .story{font-size:15px;line-height:2.35;color:#d2d8d0;white-space:pre-line;margin-top:24px}
+    .detail .takeaway{border-right:3px solid var(--gold);background:#d7b87512;padding:15px 18px;margin-top:25px;border-radius:10px;color:#eadbb8;font-size:13px;line-height:2}
+    footer{text-align:center;color:#778279;border-top:1px solid var(--line);padding:22px;font-size:11px}
+    @media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:560px){.wrap{width:min(100% - 22px,1120px)}.top-note{display:none}.hero{padding:42px 0 25px}.auth-shell{padding:22px;margin-bottom:45px}.grid{grid-template-columns:1fr;gap:12px}.card{min-height:210px}.library-head{align-items:flex-start}.library-head h2{font-size:24px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="brand"><div class="brand-mark">𓂀</div><div>حِكَايَة مِصْر<small>EGYPT THROUGH THE AGES</small></div></div>
+      <div class="top-note">رحلة في ذاكرة وطن</div>
+    </header>
+
+    <section class="hero" id="intro">
+      <div class="eyebrow">حكاية حضارة لا تنتهي</div>
+      <h1>مصر... من أول الحكاية</h1>
+      <p>افتح أبواب الزمن، واكتشف كيف عاش المصريون، وبنوا حضارتهم، وتغيرت بلادهم عبر آلاف السنين. حكايات قصيرة، واضحة، وممتعة في كل بطاقة.</p>
+      <div class="ornament">✦</div>
+    </section>
+
+    <section class="auth-shell" id="authBox">
+      <div id="emailStep">
+        <h2>ابدأ رحلتك</h2>
+        <p class="sub">اكتب بريدك الإلكتروني، وسنرسل لك رمز تحقق لمرة واحدة على بريدك.</p>
+        <div class="field"><label for="email">البريد الإلكتروني</label><input id="email" type="email" autocomplete="email" placeholder="name@gmail.com"></div>
+        <button class="btn btn-primary" id="sendCode">إرسال رمز التحقق</button>
+        <div class="status" id="emailStatus" aria-live="polite"></div>
+      </div>
+      <div id="otpStep" class="hidden">
+        <h2>تحقق من بريدك</h2>
+        <p class="sub">أدخل الرمز المكوّن من 6 أرقام الذي وصلك في رسالة البريد الإلكتروني.</p>
+        <div class="field"><label for="otp">رمز التحقق</label><input id="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000"></div>
+        <button class="btn btn-primary" id="verifyCode">تأكيد الرمز والدخول</button>
+        <button class="btn btn-secondary" id="backEmail" style="width:100%;margin-top:10px">تغيير البريد الإلكتروني</button>
+        <div class="status" id="otpStatus" aria-live="polite"></div>
+      </div>
+      <p class="tiny">لن نطلب منك كلمة مرور. لا تشارك رمز التحقق مع أي شخص.</p>
+    </section>
+
+    <main id="library" class="hidden">
+      <div class="library-head">
+        <div><div class="eyebrow">المكتبة التاريخية</div><h2>رحلتك عبر الزمن</h2><p>اختر بطاقة، وخذ وقتك في قراءة الحكاية.</p></div>
+        <button class="logout" id="logout">تسجيل الخروج</button>
+      </div>
+      <div class="tools">
+        <div class="search"><input id="search" type="search" placeholder="ابحث عن عصر أو حدث..."></div>
+        <div class="filters" id="filters">
+          <button class="filter active" data-filter="الكل">الكل</button>
+          <button class="filter" data-filter="قديم">مصر القديمة</button>
+          <button class="filter" data-filter="وسيط">العصور الوسطى</button>
+          <button class="filter" data-filter="حديث">مصر الحديثة</button>
+        </div>
+      </div>
+      <div class="grid" id="cards"></div>
+    </main>
+
+    <section id="storyView" class="detail hidden">
+      <button class="back" id="backCards">← العودة إلى البطاقات</button>
+      <div id="storyContent"></div>
+    </section>
+  </div>
+  <footer>حكاية مصر © <span id="year"></span> — صُمم بحب لكل من يريد أن يعرف حكاية بلده</footer>
+
+  <!-- ضع رابط مشروع Supabase ومفتاح anon/public الخاص بالمشروع هنا -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // 1) استبدل القيمتين من Project Settings > API في Supabase.
+    const SUPABASE_URL = "ضع_هنا_Project_URL";
+    const SUPABASE_ANON_KEY = "ضع_هنا_anon_public_key";
+
+    const configured = SUPABASE_URL.startsWith("https://") &&
+      !SUPABASE_URL.includes("ضع_هنا") &&
+      !SUPABASE_ANON_KEY.includes("ضع_هنا");
+    const supabase = configured ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+    const eras = [
+      {id:1,group:"قديم",icon:"𓂀",period:"قبل أكثر من 5 آلاف سنة",title:"بداية الحكاية: توحيد مصر",summary:"كيف اجتمعت أرض النيل في دولة واحدة؟",story:"قبل قيام الدولة المصرية القديمة، عاشت جماعات بشرية في قرى على ضفاف النيل. ومع الوقت ظهرت مراكز قوية في الشمال والجنوب، وتطورت الزراعة والتجارة والإدارة.\\n\\nيرتبط توحيد مصر العليا والسفلى تقليدياً بالملك نارمر، في أواخر الألف الرابع قبل الميلاد تقريباً. كان توحيد البلاد خطوة مهمة؛ لأنه ساعد على ظهور دولة مركزية لها حكم وإدارة ورموز مشتركة.\\n\\nومن هنا بدأت واحدة من أقدم تجارب بناء الدولة في العالم، وصار نهر النيل محور الحياة والزراعة والتنقل.",take:"الفكرة الأساسية: النيل ساعد على الاستقرار، والاستقرار ساعد على نشأة الدولة."},
+      {id:2,group:"قديم",icon:"𓃭",period:"نحو 2686–2181 ق.م",title:"عصر بناة الأهرامات",summary:"عندما تحولت العمارة إلى إنجاز حضاري مذهل.",story:"في عصر الدولة القديمة أصبحت مصر دولة منظمة ذات إدارة قوية ومشروعات ضخمة. ويُعد الملك زوسر من أبرز ملوك بدايات هذا العصر، إذ ارتبط اسمه بهرم سقارة المدرج، أحد أقدم المشروعات الحجرية الكبرى.\\n\\nثم جاء عصر بناء الأهرامات الكبرى في الجيزة، ومنها هرم خوفو. لم تكن هذه المنشآت مجرد أحجار متراكمة؛ بل احتاجت إلى تخطيط، ونقل للمواد، ومهارات هندسية، وعمل منظم.\\n\\nوتكشف آثار هذه الفترة عن مجتمع عرف الكتابة والإدارة والحرف والفنون، وترك علامات لا تزال تثير إعجاب العالم.",take:"الأهرامات شاهد على التنظيم والمعرفة والمهارة الهندسية في مصر القديمة."},
+      {id:3,group:"قديم",icon:"𓇳",period:"نحو 2055–1650 ق.م",title:"الدولة الوسطى: نهضة جديدة",summary:"عودة الاستقرار وازدهار الأدب والفنون.",story:"بعد فترة من الانقسام السياسي، نجح ملوك طيبة في إعادة توحيد البلاد، ويُعد منتوحتب الثاني من أهم من ارتبطوا ببداية الدولة الوسطى.\\n\\nشهدت هذه الفترة اهتماماً بالري والزراعة وتنظيم الإدارة، كما ازدهرت التجارة مع مناطق مجاورة. وترك الأدب المصري نصوصاً مهمة تعكس أفكار الناس عن الحياة والحكم والأخلاق.\\n\\nكانت الدولة الوسطى مرحلة تجديد، أعادت للدولة قوتها ووسعت آفاقها الاقتصادية والثقافية.",take:"لم تكن الحضارة تقدماً متواصلاً بلا توقف؛ بل مرت بأزمات ثم فترات تعافٍ وتجديد."},
+      {id:4,group:"قديم",icon:"𓆃",period:"نحو 1550–1069 ق.م",title:"الدولة الحديثة: مصر قوة كبرى",summary:"ملوك ورحلات وتوسع وعلاقات دولية.",story:"في الدولة الحديثة اتسع نفوذ مصر خارج وادي النيل، وأصبحت قوة مؤثرة في الشرق الأدنى القديم. ومن أشهر ملوكها أحمس الذي ارتبط بطرد الهكسوس وبداية الأسرة الثامنة عشرة.\\n\\nبرزت أسماء مثل حتشبسوت، التي اهتمت بالتجارة والمشروعات المعمارية، وتحتمس الثالث الذي قاد حملات عسكرية، وأخناتون الذي أحدث تغييراً دينياً كبيراً، ورمسيس الثاني الذي اشتهر بمشروعاته ومعركة قادش واتفاق السلام مع الحيثيين.\\n\\nومن آثار هذا العصر معابد الكرنك والأقصر وأبو سمبل، ومقابر وادي الملوك.",take:"الدولة الحديثة مثال على قوة مصر السياسية والثقافية واتصالها بالعالم القديم."},
+      {id:5,group:"قديم",icon:"𓊹",period:"بعد 1069 ق.م حتى 332 ق.م",title:"عصور الانتقال والحكم المتغير",summary:"فترات ضعف وقوة وملوك من أصول متعددة.",story:"بعد نهاية الدولة الحديثة، مرت مصر بفترات تراجع وانقسام، ثم ظهرت أسر حاكمة أعادت توحيد أجزاء من البلاد في أوقات مختلفة. وتنوعت التحديات بين صراعات داخلية وضغوط خارجية.\\n\\nحافظ المصريون على كثير من تقاليدهم الدينية والفنية، واستمرت المعابد ومراكز العبادة في أداء دور مهم. وفي أواخر هذه المرحلة تعاقبت على مصر قوى أجنبية، من بينها الفرس، قبل دخول الإسكندر الأكبر سنة 332 قبل الميلاد.",take:"تغير الحكام، لكن المجتمع المصري وثقافته استمرا في التطور."},
+      {id:6,group:"قديم",icon:"🏛️",period:"332–30 ق.م",title:"العصر البطلمي: مصر واليونان",summary:"الإسكندرية تصبح مركزاً للعلم والتجارة.",story:"دخل الإسكندر الأكبر مصر سنة 332 قبل الميلاد، ثم أسس مدينة الإسكندرية على ساحل البحر المتوسط. وبعد وفاته، حكم البطالمة مصر، وكان بطليموس الأول مؤسس الأسرة البطلمية.\\n\\nأصبحت الإسكندرية مدينة عالمية تجمع ثقافات متعددة، واشتهرت بمؤسساتها العلمية ومكتبتها القديمة ومنارتها. وفي الوقت نفسه استمرت المعابد والتقاليد المصرية، وظهر تفاعل بين الثقافة المصرية واليونانية.\\n\\nانتهى الحكم البطلمي بعد هزيمة كليوباترا السابعة ومارك أنطونيوس أمام أوكتافيان، ودخلت مصر تحت الحكم الروماني سنة 30 قبل الميلاد.",take:"الإسكندرية أصبحت جسراً مهماً بين ثقافات البحر المتوسط."},
+      {id:7,group:"وسيط",icon:"✝",period:"من القرن الأول الميلادي",title:"مصر في العصر القبطي",summary:"جذور تقاليد دينية وفنية ولغوية عريقة.",story:"انتشرت المسيحية في مصر خلال القرون الأولى للميلاد، وأصبحت البلاد مركزاً مهماً للحياة الرهبانية والفكر اللاهوتي. وترتبط الذاكرة القبطية برحلة العائلة المقدسة في مصر، وهي جزء مهم من التراث الديني المصري.\\n\\nحافظ الأقباط على اللغة القبطية، وهي المرحلة الأخيرة من تطور اللغة المصرية القديمة، كما تركوا تراثاً فنياً ومعمارياً مميزاً، يظهر في الكنائس والأديرة والأيقونات والمنسوجات.\\n\\nوظلت مصر جزءاً من الإمبراطورية الرومانية الشرقية، ثم البيزنطية، حتى الفتح العربي في القرن السابع الميلادي.",take:"التراث القبطي جزء أصيل من التنوع التاريخي والثقافي لمصر."},
+      {id:8,group:"وسيط",icon:"☾",period:"من 641م",title:"مصر في العصر الإسلامي",summary:"تحولات المدن والعمارة والحياة اليومية.",story:"بدأ الفتح العربي لمصر في القرن السابع الميلادي، وأُنشئت مدينة الفسطاط لتكون مركزاً إدارياً جديداً. ومع مرور الزمن أصبحت العربية اللغة الأوسع انتشاراً، وانتشر الإسلام تدريجياً، مع استمرار وجود المجتمعات المسيحية وتنوع الحياة الدينية.\\n\\nتعاقبت على مصر دول وسلالات متعددة، منها الطولونيون والإخشيديون والفاطميون والأيوبيون والمماليك. وشهدت البلاد بناء مدن ومساجد ومدارس وأسوار وأسواق، وأصبحت القاهرة مركزاً سياسياً وثقافياً مهماً.\\n\\nومن أشهر المعالم التي تعكس هذا التاريخ جامع الأزهر وقلعة صلاح الدين وآثار القاهرة التاريخية.",take:"تاريخ مصر الإسلامي طويل ومتنوع، ولا يقتصر على دولة أو حاكم واحد."},
+      {id:9,group:"وسيط",icon:"⚔",period:"1517–1798م",title:"العصر العثماني",summary:"مصر ولاية مهمة ضمن إمبراطورية واسعة.",story:"دخلت مصر تحت الحكم العثماني سنة 1517 بعد انتصار السلطان سليم الأول على دولة المماليك. أصبحت مصر ولاية تابعة للدولة العثمانية، واحتفظ المماليك بنفوذ كبير في الإدارة والاقتصاد المحليين خلال فترات طويلة.\\n\\nظلت القاهرة مدينة مهمة للتجارة والعلم والحرف، وربط موقع مصر بين البحر المتوسط والبحر الأحمر طرقاً تجارية واسعة. وفي أواخر القرن الثامن عشر جاءت الحملة الفرنسية سنة 1798، وبدأت مرحلة جديدة من التنافس الأوروبي على مصر.",take:"موقع مصر الجغرافي جعلها محط اهتمام القوى الإقليمية والدولية."},
+      {id:10,group:"حديث",icon:"⚓",period:"1798–1805م",title:"الحملة الفرنسية وبداية تحولات جديدة",summary:"مرحلة قصيرة تركت آثاراً سياسية وعلمية.",story:"وصلت الحملة الفرنسية إلى مصر بقيادة نابليون بونابرت سنة 1798. واجهت الحملة مقاومة من المصريين، كما شهدت البلاد صراعاً دولياً انتهى بخروج القوات الفرنسية سنة 1801.\\n\\nرافق الحملة علماء وفنانون، وجمعوا معلومات ورسومات عن آثار مصر وطبيعتها، ونُشرت لاحقاً في عمل ضخم عُرف باسم وصف مصر. كما عُثر خلال الحملة على حجر رشيد، الذي ساعد العلماء لاحقاً على فك رموز الكتابة الهيروغليفية.\\n\\nأدت الاضطرابات إلى صعود محمد علي، الذي تولى حكم مصر سنة 1805.",take:"الحملة كانت احتلالاً عسكرياً قصير الأمد، لكنها ارتبطت بتحولات مهمة في دراسة آثار مصر."},
+      {id:11,group:"حديث",icon:"🏭",period:"1805–1882م",title:"محمد علي وبناء الدولة الحديثة",summary:"جيش ومدارس ومصانع ومشروعات كبرى.",story:"بدأ محمد علي حكم مصر سنة 1805، وعمل على بناء دولة مركزية قوية. أنشأ جيشاً حديثاً، واهتم بالتعليم والبعثات والترجمة، وأقام مصانع ومشروعات زراعية، ووسع نظم الإدارة.\\n\\nشهدت مصر في عهده وعهود خلفائه تغييرات كبيرة، لكنها صاحبتها أعباء مالية وسياسية. وفي القرن التاسع عشر بدأ حفر قناة السويس، وافتتحت للملاحة سنة 1869، فزاد ارتباط مصر بالتجارة العالمية.\\n\\nتراكمت الديون والتدخلات الأجنبية، وصولاً إلى الاحتلال البريطاني سنة 1882.",take:"تحديث مؤسسات الدولة صاحبه أيضاً تحديات اقتصادية وسياسية كبيرة."},
+      {id:12,group:"حديث",icon:"🇪🇬",period:"1882–1952م",title:"الحركة الوطنية والاستقلال",summary:"أجيال تطالب بالحرية وتشارك في تشكيل المستقبل.",story:"بدأ الاحتلال البريطاني سنة 1882، وظهرت حركات وطنية تطالب بإنهائه. كان لثورة 1919 دور بارز في اتساع المشاركة الشعبية، وارتبط اسم سعد زغلول وقيادات الوفد بالمطالبة بالاستقلال.\\n\\nأُعلن استقلال مصر بصيغة محدودة سنة 1922، ثم صدر دستور 1923، وشهدت البلاد حياة برلمانية وصحافة وفنوناً وثقافة نشطة، رغم استمرار النفوذ البريطاني ووجود خلافات سياسية واجتماعية.\\n\\nاستمرت المطالب الوطنية حتى ثورة يوليو 1952، التي أنهت النظام الملكي وبدأت مرحلة جمهورية جديدة.",take:"الاستقلال كان مساراً طويلاً شاركت فيه حركات شعبية وسياسية متعددة."},
+      {id:13,group:"حديث",icon:"🏙️",period:"1952–1970م",title:"الجمهورية ومشروعات التحول",summary:"تغييرات سياسية واجتماعية ومشروع السد العالي.",story:"بعد ثورة يوليو 1952 أُعلنت الجمهورية سنة 1953. شهدت مصر تغييرات واسعة في نظام الحكم والاقتصاد والمجتمع، من بينها الإصلاح الزراعي وتوسع التعليم ومشروعات التصنيع.\\n\\nفي سنة 1956 أمّم الرئيس جمال عبد الناصر شركة قناة السويس، وتبع ذلك العدوان الثلاثي. ومن أبرز مشروعات هذه المرحلة السد العالي في أسوان، الذي ساعد على تنظيم مياه النيل وتوليد الكهرباء، وكان له تأثير كبير على الزراعة والاقتصاد والبيئة.\\n\\nكما ارتبطت هذه الفترة بدور إقليمي واسع لمصر في العالم العربي وأفريقيا وحركة عدم الانحياز.",take:"المشروعات الكبرى يمكن أن تغير حياة المجتمع، لكنها تحمل آثاراً اقتصادية وبيئية يجب فهمها معاً."},
+      {id:14,group:"حديث",icon:"🕊️",period:"1970–2011م",title:"من حرب أكتوبر إلى التحولات الاقتصادية",summary:"استعادة الأرض والسلام وتغيرات المجتمع.",story:"في أكتوبر 1973 خاضت مصر حرباً ضد إسرائيل، ونجحت القوات المصرية في عبور قناة السويس وتحقيق أهداف عسكرية مهمة في بداية الحرب. أعقبت الحرب مفاوضات ومسار سياسي انتهى باتفاقية السلام المصرية الإسرائيلية سنة 1979، ثم استكمال استعادة سيناء سنة 1982، باستثناء طابا التي عادت سنة 1989 بعد التحكيم.\\n\\nشهدت العقود التالية تحولات اقتصادية واجتماعية، وتوسعاً عمرانياً، وتغيرات في الإعلام والتعليم والحياة اليومية. كما ظهرت مطالب سياسية واجتماعية متزايدة في السنوات التي سبقت 2011.",take:"تاريخ هذه المرحلة يجمع بين الحرب والسلام والتحولات الاقتصادية والاجتماعية."},
+      {id:15,group:"حديث",icon:"🌅",period:"2011–اليوم",title:"مصر في القرن الحادي والعشرين",summary:"مجتمع متغير وتكنولوجيا وتحديات وفرص.",story:"دخلت مصر مرحلة جديدة بعد أحداث 2011، وشهدت تغيرات سياسية كبيرة، منها انتقالات في السلطة وتعديلات دستورية وانتخابات. وفي السنوات التالية توسعت مشروعات البنية التحتية والطرق والمدن الجديدة والطاقة، بالتوازي مع تحديات اقتصادية تتعلق بالأسعار وفرص العمل والدخل.\\n\\nتغيرت حياة المصريين أيضاً مع انتشار الهواتف الذكية والإنترنت ومنصات التواصل، وأصبحت مجالات مثل البرمجة وريادة الأعمال والتجارة الرقمية جزءاً من النقاش حول المستقبل.\\n\\nمصر اليوم بلد له تاريخ عميق وسكان شباب وطموحات كبيرة، ومستقبله يتشكل من التعليم والعمل والابتكار والمشاركة المجتمعية.",take:"التاريخ لا يتوقف عند الماضي؛ فكل جيل يضيف فصلاً جديداً إلى حكاية مصر."}
+    ];
+
+    const $ = id => document.getElementById(id);
+    let currentFilter = "الكل";
+    let currentEra = null;
+
+    function setStatus(id, message, type="") {
+      const el = $(id); el.textContent = message; el.className = "status " + type;
+    }
+    function showLibrary() {
+      $("authBox").classList.add("hidden");
+      $("intro").classList.add("hidden");
+      $("library").classList.remove("hidden");
+      $("storyView").classList.add("hidden");
+      renderCards();
+    }
+    function showAuth() {
+      $("authBox").classList.remove("hidden");
+      $("intro").classList.remove("hidden");
+      $("library").classList.add("hidden");
+      $("storyView").classList.add("hidden");
+    }
+    function renderCards() {
+      const q = $("search").value.trim().toLowerCase();
+      const list = eras.filter(e => (currentFilter === "الكل" || e.group === currentFilter) &&
+        (e.title.toLowerCase().includes(q) || e.summary.toLowerCase().includes(q) || e.period.toLowerCase().includes(q)));
+      $("cards").innerHTML = "";
+      list.forEach(e => {
+        const card = document.createElement("article");
+        card.className = "card";
+        const top = document.createElement("div"); top.className = "card-top";
+        const symbol = document.createElement("div"); symbol.className = "symbol"; symbol.textContent = e.icon;
+        const period = document.createElement("span"); period.className = "period"; period.textContent = e.period;
+        top.append(symbol, period);
+        const title = document.createElement("h3"); title.textContent = e.title;
+        const summary = document.createElement("p"); summary.textContent = e.summary;
+        const btn = document.createElement("button"); btn.className = "read"; btn.textContent = "اقرأ الحكاية ";
+        const arrow = document.createElement("span"); arrow.textContent = "←"; btn.append(arrow);
+        btn.addEventListener("click", () => openStory(e.id));
+        card.append(top,title,summary,btn); $("cards").append(card);
+      });
+      if (!list.length) {
+        const empty = document.createElement("p"); empty.className="sub"; empty.textContent="لم نعثر على بطاقة مطابقة. جرّب كلمة بحث أخرى."; $("cards").append(empty);
+      }
+    }
+    function openStory(id) {
+      const e = eras.find(x => x.id === id); if (!e) return;
+      currentEra = id;
+      $("library").classList.add("hidden");
+      $("storyView").classList.remove("hidden");
+      const holder = $("storyContent"); holder.replaceChildren();
+      const date = document.createElement("div"); date.className="date"; date.textContent=e.period;
+      const title = document.createElement("h2"); title.textContent=e.title;
+      const summary = document.createElement("p"); summary.className="sub"; summary.textContent=e.summary;
+      const story = document.createElement("div"); story.className="story"; story.textContent=e.story;
+      const takeaway = document.createElement("div"); takeaway.className="takeaway"; takeaway.textContent=e.takeaway;
+      holder.append(date,title,summary,story,takeaway);
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+
+    $("sendCode").addEventListener("click", async () => {
+      const email = $("email").value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setStatus("emailStatus","اكتب بريد إلكتروني صحيحاً.","error");
+      if (!supabase) return setStatus("emailStatus","قبل الاستخدام: أضف Project URL و anon public key من Supabase داخل الكود.","error");
+      $("sendCode").disabled = true; $("sendCode").textContent = "جارٍ الإرسال...";
+      const {error} = await supabase.auth.signInWithOtp({email, options:{shouldCreateUser:true}});
+      $("sendCode").disabled = false; $("sendCode").textContent = "إرسال رمز التحقق";
+      if (error) return setStatus("emailStatus","تعذر إرسال الرمز: " + error.message,"error");
+      $("emailStep").classList.add("hidden"); $("otpStep").classList.remove("hidden");
+      setStatus("otpStatus","تم إرسال الرمز إلى " + email + ". افحص الوارد والرسائل غير المرغوب فيها.","success");
+    });
+
+    $("verifyCode").addEventListener("click", async () => {
+      const email = $("email").value.trim(), token = $("otp").value.trim();
+      if (!/^\d{6}$/.test(token)) return setStatus("otpStatus","أدخل رمزاً مكوّناً من 6 أرقام.","error");
+      $("verifyCode").disabled = true; $("verifyCode").textContent = "جارٍ التحقق...";
+      const {data,error} = await supabase.auth.verifyOtp({email,token,type:"email"});
+      $("verifyCode").disabled = false; $("verifyCode").textContent = "تأكيد الرمز والدخول";
+      if (error) return setStatus("otpStatus","الرمز غير صحيح أو انتهت صلاحيته. حاول مرة أخرى.","error");
+      if (data.session) showLibrary();
+    });
+
+    $("backEmail").addEventListener("click", () => {
+      $("otpStep").classList.add("hidden"); $("emailStep").classList.remove("hidden");
+      setStatus("emailStatus",""); setStatus("otpStatus","");
+    });
+    $("logout").addEventListener("click", async () => { if(supabase) await supabase.auth.signOut(); showAuth(); });
+    $("backCards").addEventListener("click", () => { $("storyView").classList.add("hidden"); $("library").classList.remove("hidden"); window.scrollTo({top:0,behavior:"smooth"}); });
+    $("search").addEventListener("input",renderCards);
+    $("filters").addEventListener("click", e => {
+      const b = e.target.closest("button[data-filter]"); if(!b) return;
+      currentFilter=b.dataset.filter;
+      document.querySelectorAll(".filter").forEach(x=>x.classList.toggle("active",x===b));
+      renderCards();
+    });
+    $("year").textContent = new Date().getFullYear();
+
+    if (supabase) {
+      supabase.auth.getSession().then(({data}) => { if(data.session) showLibrary(); });
+      supabase.auth.onAuthStateChange((_event,session) => { if(session) showLibrary(); });
+    }
+  </script>
+</body>
+</html>
